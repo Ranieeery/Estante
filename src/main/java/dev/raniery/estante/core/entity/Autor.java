@@ -16,7 +16,6 @@ public class Autor {
     private GeneroAutor gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    //TODO: obras do autor
 
     public Autor(Long id, String name, Set<String> aliases, GeneroAutor gender, LocalDate birthDate, LocalDate deathDate) {
         this.id = id;
@@ -57,6 +56,9 @@ public class Autor {
     }
 
     public void setBirthDate(LocalDate birthDate) {
+        if (birthDate != null && birthDate.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Birth date cannot be in the future");
+        }
         this.birthDate = birthDate;
     }
 
@@ -65,7 +67,6 @@ public class Autor {
     }
 
     public void setDeathDate(LocalDate deathDate) {
-
         if (deathDate != null) {
             if (birthDate != null && deathDate.isBefore(birthDate)) {
                 throw new IllegalArgumentException("Death date cannot be before birth date");
