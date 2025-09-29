@@ -5,7 +5,10 @@ import dev.raniery.estante.core.enums.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 public class Obra {
 
@@ -29,7 +32,7 @@ public class Obra {
     private Periodicidade periodicity;
     private TipoObra type;
     private String coverUrl;
-    private String animeLink;
+    private String animeUrl;
     private final OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 
@@ -39,7 +42,7 @@ public class Obra {
                 StatusPublicacao pubStatusBr, StatusPublicacao pubStatusOrig,
                 Set<GeneroObra> genres, Demografia demographic, LocalDate startDateBr,
                 LocalDate endDateBr, Set<Long> relatedWorksIds, Periodicidade periodicity,
-                TipoObra type, String coverUrl, String animeLink) {
+                TipoObra type, String coverUrl, String animeUrl) {
 
         this.id = id;
         setTitle(title);
@@ -61,7 +64,7 @@ public class Obra {
         this.periodicity = periodicity;
         this.type = type;
         this.coverUrl = coverUrl;
-        this.animeLink = animeLink;
+        this.animeUrl = animeUrl;
         this.createdAt = OffsetDateTime.now(ZoneId.of("America/Sao_Paulo"));
         this.updatedAt = this.createdAt;
     }
@@ -79,7 +82,7 @@ public class Obra {
     }
 
     public Set<String> getAliases() {
-        return aliases == null ? Collections.emptySet() : Collections.unmodifiableSet(aliases);
+        return Collections.unmodifiableSet(aliases);
     }
 
     public String getDescription() {
@@ -87,7 +90,7 @@ public class Obra {
     }
 
     public Set<Contribuicao> getStaff() {
-        return staff == null ? Collections.emptySet() : Collections.unmodifiableSet(staff);
+        return Collections.unmodifiableSet(staff);
     }
 
     public Editora getPublisherBr() {
@@ -115,7 +118,7 @@ public class Obra {
     }
 
     public Set<GeneroObra> getGenres() {
-        return genres == null ? Collections.emptySet() : Collections.unmodifiableSet(genres);
+        return Collections.unmodifiableSet(genres);
     }
 
     public Demografia getDemographic() {
@@ -131,7 +134,7 @@ public class Obra {
     }
 
     public Set<Long> getRelatedWorksIds() {
-        return relatedWorksIds == null ? Collections.emptySet() : Collections.unmodifiableSet(relatedWorksIds);
+        return Collections.unmodifiableSet(relatedWorksIds);
     }
 
     public Periodicidade getPeriodicity() {
@@ -146,8 +149,8 @@ public class Obra {
         return coverUrl;
     }
 
-    public String getAnimeLink() {
-        return animeLink;
+    public String getAnimeUrl() {
+        return animeUrl;
     }
 
     public OffsetDateTime getCreatedAt() {
@@ -258,8 +261,8 @@ public class Obra {
         setUpdatedAt();
     }
 
-    public void setAnimeLink(String animeLink) {
-        this.animeLink = animeLink;
+    public void setAnimeUrl(String animeUrl) {
+        this.animeUrl = animeUrl;
         setUpdatedAt();
     }
 
@@ -352,7 +355,7 @@ public class Obra {
             ", periodicity=" + periodicity +
             ", type=" + type +
             ", coverUrl='" + coverUrl + '\'' +
-            ", animeLink='" + animeLink + '\'' +
+            ", animeUrl='" + animeUrl + '\'' +
             ", createdAt=" + createdAt +
             ", updatedAt=" + updatedAt +
             '}';
