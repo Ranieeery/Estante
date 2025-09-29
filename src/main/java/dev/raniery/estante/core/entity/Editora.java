@@ -16,7 +16,7 @@ public class Editora {
         this.id = id;
         setName(name);
         this.aliases = (aliases != null) ? new HashSet<>(aliases) : new HashSet<>();
-        this.site = (site != null) ? site.trim() : null;
+        setSite(site);
     }
 
     public Long getId() {
@@ -37,14 +37,19 @@ public class Editora {
 
     public void setName(String name) {
         Objects.requireNonNull(name, "Name cannot be null");
-
-        if (!name.trim().isEmpty()) {
-            this.name = name.trim();
+        String trimmedName = name.trim();
+        if (trimmedName.isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be empty or blank");
         }
+        this.name = trimmedName;
+    }
+
+    public void setSite(String site) {
+        this.site = (site != null) ? site.trim() : null;
     }
 
     public void rename(String newName) {
-        this.name = newName;
+        setName(newName);
     }
 
     public void addAlias(String alias) {
@@ -56,11 +61,7 @@ public class Editora {
     }
 
     public void removeAlias(String alias) {
-        this.aliases.remove(alias);
-    }
-
-    public void updateSite(String newSite) {
-        this.site = newSite;
+        this.aliases.remove(alias.trim());
     }
 
     @Override
