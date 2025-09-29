@@ -1,6 +1,6 @@
 package dev.raniery.estante.core.enums;
 
-public enum Gender {
+public enum GeneroAutor {
     MASCULINO,
     FEMININO,
     NAO_BINARIO

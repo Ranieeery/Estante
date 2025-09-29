@@ -1,6 +1,6 @@
 package dev.raniery.estante.core.entity;
 
-import dev.raniery.estante.core.enums.Gender;
+import dev.raniery.estante.core.enums.GeneroAutor;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -13,12 +13,12 @@ public class Autor {
     private Long id;
     private String name;
     private Set<String> aliases;
-    private Gender gender;
+    private GeneroAutor gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
     //TODO: obras do autor
 
-    public Autor(Long id, String name, Set<String> aliases, Gender gender, LocalDate birthDate, LocalDate deathDate) {
+    public Autor(Long id, String name, Set<String> aliases, GeneroAutor gender, LocalDate birthDate, LocalDate deathDate) {
         this.id = id;
         setName(name);
         this.aliases = (aliases != null) ? new HashSet<>(aliases) : new HashSet<>();
@@ -48,7 +48,7 @@ public class Autor {
         return Collections.unmodifiableSet(aliases);
     }
 
-    public Gender getGender() {
+    public GeneroAutor getGender() {
         return gender;
     }
 
