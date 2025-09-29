@@ -27,14 +27,6 @@ public class Editora {
         return name;
     }
 
-    public Set<String> getAliases() {
-        return Collections.unmodifiableSet(aliases);
-    }
-
-    public String getSite() {
-        return site;
-    }
-
     public void setName(String name) {
         Objects.requireNonNull(name, "Name cannot be null");
         String trimmedName = name.trim();
@@ -42,6 +34,14 @@ public class Editora {
             throw new IllegalArgumentException("Name cannot be empty or blank");
         }
         this.name = trimmedName;
+    }
+
+    public Set<String> getAliases() {
+        return Collections.unmodifiableSet(aliases);
+    }
+
+    public String getSite() {
+        return site;
     }
 
     public void setSite(String site) {

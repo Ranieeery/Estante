@@ -35,6 +35,15 @@ public class Autor {
         return name;
     }
 
+    public void setName(String name) {
+        Objects.requireNonNull(name, "Name cannot be null");
+        String trimmedName = name.trim();
+        if (trimmedName.isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be empty or blank");
+        }
+        this.name = trimmedName;
+    }
+
     public Set<String> getAliases() {
         return Collections.unmodifiableSet(aliases);
     }
@@ -47,21 +56,12 @@ public class Autor {
         return birthDate;
     }
 
-    public LocalDate getDeathDate() {
-        return deathDate;
-    }
-
-    public void setName(String name) {
-        Objects.requireNonNull(name, "Name cannot be null");
-        String trimmedName = name.trim();
-        if (trimmedName.isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be empty or blank");
-        }
-        this.name = trimmedName;
-    }
-
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public LocalDate getDeathDate() {
+        return deathDate;
     }
 
     public void setDeathDate(LocalDate deathDate) {
