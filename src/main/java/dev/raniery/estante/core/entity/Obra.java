@@ -5,10 +5,7 @@ import dev.raniery.estante.core.enums.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Obra {
 
@@ -82,7 +79,7 @@ public class Obra {
     }
 
     public Set<String> getAliases() {
-        return Collections.unmodifiableSet(aliases);
+        return aliases == null ? Collections.emptySet() : Collections.unmodifiableSet(aliases);
     }
 
     public String getDescription() {
@@ -90,7 +87,7 @@ public class Obra {
     }
 
     public Set<Contribuicao> getStaff() {
-        return Collections.unmodifiableSet(staff);
+        return staff == null ? Collections.emptySet() : Collections.unmodifiableSet(staff);
     }
 
     public Editora getPublisherBr() {
@@ -118,7 +115,7 @@ public class Obra {
     }
 
     public Set<GeneroObra> getGenres() {
-        return Collections.unmodifiableSet(genres);
+        return genres == null ? Collections.emptySet() : Collections.unmodifiableSet(genres);
     }
 
     public Demografia getDemographic() {
@@ -134,7 +131,7 @@ public class Obra {
     }
 
     public Set<Long> getRelatedWorksIds() {
-        return Collections.unmodifiableSet(relatedWorksIds);
+        return relatedWorksIds == null ? Collections.emptySet() : Collections.unmodifiableSet(relatedWorksIds);
     }
 
     public Periodicidade getPeriodicity() {
