@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Autor {
 
-    private Long id;
+    private final Long id;
     private String name;
     private Set<String> aliases;
     private GeneroAutor gender;
