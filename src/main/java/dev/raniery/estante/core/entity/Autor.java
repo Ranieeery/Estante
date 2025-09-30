@@ -3,6 +3,7 @@ package dev.raniery.estante.core.entity;
 import dev.raniery.estante.core.enums.GeneroAutor;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -16,14 +17,32 @@ public class Autor {
     private GeneroAutor gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
+    private final OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
 
-    public Autor(Long id, String name, Set<String> aliases, GeneroAutor gender, LocalDate birthDate, LocalDate deathDate) {
+    public Autor(Long id, String name, Set<String> aliases, GeneroAutor gender,
+                 LocalDate birthDate, LocalDate deathDate) {
         this.id = id;
         setName(name);
         this.aliases = (aliases != null) ? new HashSet<>(aliases) : new HashSet<>();
         this.gender = gender;
         setBirthDate(birthDate);
         setDeathDate(deathDate);
+        this.createdAt = null;
+        this.updatedAt = null;
+    }
+
+    public Autor(Long id, String name, Set<String> aliases, GeneroAutor gender,
+                 LocalDate birthDate, LocalDate deathDate, OffsetDateTime createdAt,
+                 OffsetDateTime updatedAt) {
+        this.id = id;
+        setName(name);
+        this.aliases = (aliases != null) ? new HashSet<>(aliases) : new HashSet<>();
+        this.gender = gender;
+        setBirthDate(birthDate);
+        setDeathDate(deathDate);
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -32,15 +51,6 @@ public class Autor {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        Objects.requireNonNull(name, "Name cannot be null");
-        String trimmedName = name.trim();
-        if (trimmedName.isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be empty or blank");
-        }
-        this.name = trimmedName;
     }
 
     public Set<String> getAliases() {
@@ -55,15 +65,32 @@ public class Autor {
         return birthDate;
     }
 
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setName(String name) {
+        Objects.requireNonNull(name, "Name cannot be null");
+        String trimmedName = name.trim();
+        if (trimmedName.isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be empty or blank");
+        }
+        this.name = trimmedName;
+    }
+
     public void setBirthDate(LocalDate birthDate) {
         if (birthDate != null && birthDate.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("Birth date cannot be in the future");
         }
         this.birthDate = birthDate;
-    }
-
-    public LocalDate getDeathDate() {
-        return deathDate;
     }
 
     public void setDeathDate(LocalDate deathDate) {
@@ -77,6 +104,10 @@ public class Autor {
         }
 
         this.deathDate = deathDate;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public void rename(String newName) {
@@ -93,5 +124,31 @@ public class Autor {
 
     public void removeAlias(String alias) {
         this.aliases.remove(alias.trim());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Autor autor)) return false;
+        return Objects.equals(id, autor.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Autor{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", aliases=" + aliases +
+            ", gender=" + gender +
+            ", birthDate=" + birthDate +
+            ", deathDate=" + deathDate +
+            ", createdAt=" + createdAt +
+            ", updatedAt=" + updatedAt +
+            '}';
     }
 }

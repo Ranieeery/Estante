@@ -4,7 +4,6 @@ import dev.raniery.estante.core.enums.*;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -49,24 +48,58 @@ public class Obra {
         setOriginalTitle(originalTitle);
         this.aliases = (aliases != null) ? new HashSet<>(aliases) : new HashSet<>();
         setDescription(description);
-        setStaff(staff);
+        this.staff = (staff != null) ? new HashSet<>(staff) : new HashSet<>();
         this.publisherBr = publisherBr;
         this.publisherOrig = publisherOrig;
         this.volumesBr = volumesBr;
         this.volumesOrig = volumesOrig;
         this.pubStatusBr = pubStatusBr;
         this.pubStatusOrig = pubStatusOrig;
-        setGenres(genres);
+        this.genres = (genres != null) ? new HashSet<>(genres) : new HashSet<>();
         this.demographic = demographic;
         this.startDateBr = startDateBr;
         this.endDateBr = endDateBr;
-        setRelatedWorksIds(relatedWorksIds);
+        this.relatedWorksIds = (relatedWorksIds != null) ? new HashSet<>(relatedWorksIds) : new HashSet<>();
         this.periodicity = periodicity;
         this.type = type;
         this.coverUrl = coverUrl;
         this.animeUrl = animeUrl;
-        this.createdAt = OffsetDateTime.now(ZoneId.of("America/Sao_Paulo"));
-        this.updatedAt = this.createdAt;
+        this.createdAt = null;
+        this.updatedAt = null;
+    }
+
+    public Obra(Long id, String title, String originalTitle, Set<String> aliases,
+                String description, Set<Contribuicao> staff, Editora publisherBr,
+                Editora publisherOrig, Integer volumesBr, Integer volumesOrig,
+                StatusPublicacao pubStatusBr, StatusPublicacao pubStatusOrig,
+                Set<GeneroObra> genres, Demografia demographic, LocalDate startDateBr,
+                LocalDate endDateBr, Set<Long> relatedWorksIds, Periodicidade periodicity,
+                TipoObra type, String coverUrl, String animeUrl,
+                OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+
+        this.id = id;
+        setTitle(title);
+        setOriginalTitle(originalTitle);
+        this.aliases = (aliases != null) ? new HashSet<>(aliases) : new HashSet<>();
+        setDescription(description);
+        this.staff = (staff != null) ? new HashSet<>(staff) : new HashSet<>();
+        this.publisherBr = publisherBr;
+        this.publisherOrig = publisherOrig;
+        this.volumesBr = volumesBr;
+        this.volumesOrig = volumesOrig;
+        this.pubStatusBr = pubStatusBr;
+        this.pubStatusOrig = pubStatusOrig;
+        this.genres = (genres != null) ? new HashSet<>(genres) : new HashSet<>();
+        this.demographic = demographic;
+        this.startDateBr = startDateBr;
+        this.endDateBr = endDateBr;
+        this.relatedWorksIds = (relatedWorksIds != null) ? new HashSet<>(relatedWorksIds) : new HashSet<>();
+        this.periodicity = periodicity;
+        this.type = type;
+        this.coverUrl = coverUrl;
+        this.animeUrl = animeUrl;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -168,7 +201,6 @@ public class Obra {
             throw new IllegalArgumentException("Title cannot be empty or blank");
         }
         this.title = trimmedTitle;
-        setUpdatedAt();
     }
 
     public void setOriginalTitle(String originalTitle) {
@@ -178,96 +210,66 @@ public class Obra {
             throw new IllegalArgumentException("Original Title cannot be empty or blank");
         }
         this.originalTitle = trimmedOriginalTitle;
-        setUpdatedAt();
     }
 
     public void setDescription(String description) {
         this.description = (description != null) ? description.trim() : null;
-        setUpdatedAt();
-    }
-
-    public void setStaff(Set<Contribuicao> staff) {
-        this.staff = (staff != null) ? new HashSet<>(staff) : new HashSet<>();
-        setUpdatedAt();
     }
 
     public void setPublisherBr(Editora publisherBr) {
         this.publisherBr = publisherBr;
-        setUpdatedAt();
     }
 
     public void setPublisherOrig(Editora publisherOrig) {
         this.publisherOrig = publisherOrig;
-        setUpdatedAt();
     }
 
     public void setVolumesBr(Integer volumesBr) {
         this.volumesBr = volumesBr;
-        setUpdatedAt();
     }
 
     public void setVolumesOrig(Integer volumesOrig) {
         this.volumesOrig = volumesOrig;
-        setUpdatedAt();
     }
 
     public void setPubStatusBr(StatusPublicacao pubStatusBr) {
         this.pubStatusBr = pubStatusBr;
-        setUpdatedAt();
     }
 
     public void setPubStatusOrig(StatusPublicacao pubStatusOrig) {
         this.pubStatusOrig = pubStatusOrig;
-        setUpdatedAt();
-    }
-
-    public void setGenres(Set<GeneroObra> genres) {
-        this.genres = (genres != null) ? new HashSet<>(genres) : new HashSet<>();
-        setUpdatedAt();
     }
 
     public void setDemographic(Demografia demographic) {
         this.demographic = demographic;
-        setUpdatedAt();
     }
 
     public void setStartDateBr(LocalDate startDateBr) {
         this.startDateBr = startDateBr;
-        setUpdatedAt();
     }
 
     public void setEndDateBr(LocalDate endDateBr) {
         this.endDateBr = endDateBr;
-        setUpdatedAt();
-    }
-
-    public void setRelatedWorksIds(Set<Long> relatedWorksIds) {
-        this.relatedWorksIds = (relatedWorksIds != null) ? new HashSet<>(relatedWorksIds) : new HashSet<>();
-        setUpdatedAt();
     }
 
     public void setPeriodicity(Periodicidade periodicity) {
         this.periodicity = periodicity;
-        setUpdatedAt();
     }
 
     public void setType(TipoObra type) {
         this.type = type;
-        setUpdatedAt();
     }
 
     public void setCoverUrl(String coverUrl) {
         this.coverUrl = coverUrl;
-        setUpdatedAt();
     }
 
     public void setAnimeUrl(String animeUrl) {
         this.animeUrl = animeUrl;
-        setUpdatedAt();
     }
 
-    public void setUpdatedAt() {
-        this.updatedAt = OffsetDateTime.now(ZoneId.of("America/Sao_Paulo"));
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public void renameBr(String newTitle) {
@@ -283,53 +285,53 @@ public class Obra {
 
         if (!alias.trim().isEmpty()) {
             this.aliases.add(alias.trim());
-            setUpdatedAt();
         }
     }
 
     public void removeAlias(String alias) {
-        if (this.aliases.remove(alias.trim())) {
-            setUpdatedAt();
-        }
+        this.aliases.remove(alias.trim());
     }
 
     public void addStaffMember(Contribuicao staffMember) {
         Objects.requireNonNull(staffMember, "Contribuicao cannot be null");
 
         this.staff.add(staffMember);
-        setUpdatedAt();
     }
 
     public void removeStaffMember(Contribuicao contribuicao) {
-        if (this.staff.remove(contribuicao)) {
-            setUpdatedAt();
-        }
+        this.staff.remove(contribuicao);
     }
 
     public void addGenre(GeneroObra genre) {
         Objects.requireNonNull(genre, "Genre cannot be null");
 
         this.genres.add(genre);
-        setUpdatedAt();
     }
 
     public void removeGenre(GeneroObra genre) {
-        if (this.genres.remove(genre)) {
-            setUpdatedAt();
-        }
+        this.genres.remove(genre);
     }
 
     public void addRelatedWork(Long obraId) {
         Objects.requireNonNull(obraId, "Obra ID cannot be null");
 
         this.relatedWorksIds.add(obraId);
-        setUpdatedAt();
     }
 
     public void removeRelatedWork(Long obraId) {
-        if (this.relatedWorksIds.remove(obraId)) {
-            setUpdatedAt();
-        }
+        this.relatedWorksIds.remove(obraId);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Obra obra)) return false;
+        return Objects.equals(id, obra.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
     @Override
