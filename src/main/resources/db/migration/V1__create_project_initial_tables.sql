@@ -81,7 +81,7 @@ CREATE TABLE tb_contribuicoes (
     type       tipo_contribuicao NOT NULL,
     created_at TIMESTAMPTZ       NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
-    PRIMARY KEY (obra_id, autor_id, tipo)
+    PRIMARY KEY (obra_id, autor_id, type)
 );
 
 CREATE TABLE tb_volumes
