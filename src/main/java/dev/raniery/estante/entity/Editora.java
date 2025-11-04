@@ -1,6 +1,6 @@
 package dev.raniery.estante.entity;
 
-import dev.raniery.estante.entity.converter.StringArrayConverter;
+import dev.raniery.estante.entity.config.StringArrayConverter;
 import dev.raniery.estante.entity.enums.TipoEditora;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

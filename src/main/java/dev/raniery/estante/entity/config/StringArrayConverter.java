@@ -1,4 +1,4 @@
-package dev.raniery.estante.entity.converter;
+package dev.raniery.estante.entity.config;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
