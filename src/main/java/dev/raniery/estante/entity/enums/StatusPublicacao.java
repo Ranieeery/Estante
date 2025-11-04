@@ -1,9 +1,9 @@
-package dev.raniery.estante.core.enums;
+package dev.raniery.estante.entity.enums;
 
 public enum StatusPublicacao {
     ANUNCIADO,
     EM_ANDAMENTO,
-    COMPLETO,
+    FINALIZADO,
     HIATO,
     CANCELADO
 }

@@ -1,4 +1,4 @@
-package dev.raniery.estante.core.enums;
+package dev.raniery.estante.entity.enums;
 
 public enum TipoContribuicao {
     AUTOR,
