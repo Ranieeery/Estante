@@ -78,7 +78,7 @@ CREATE TYPE tipo_contribuicao AS ENUM ('AUTOR', 'COAUTOR', 'ILUSTRADOR', 'AUTOR_
 CREATE TABLE tb_contribuicoes (
     obra_id    BIGINT REFERENCES tb_obras (id) ON DELETE CASCADE,
     autor_id   BIGINT REFERENCES tb_autores (id) ON DELETE CASCADE,
-    tipo       tipo_contribuicao NOT NULL,
+    type       tipo_contribuicao NOT NULL,
     created_at TIMESTAMPTZ       NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
     PRIMARY KEY (obra_id, autor_id, tipo)
