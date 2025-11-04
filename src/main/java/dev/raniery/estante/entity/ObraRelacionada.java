@@ -35,14 +35,15 @@ public class ObraRelacionada {
     private Obra related;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "tipo_relacao")
+    @Column(name = "relation_type", columnDefinition = "tipo_relacao")
     private TipoRelacao relationType;
 
     @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
     @LastModifiedDate
+    @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
     @Override

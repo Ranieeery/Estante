@@ -40,15 +40,18 @@ public class Autor {
     @Enumerated(EnumType.STRING)
     private GeneroAutor gender;
 
+    @Column(name = "birth_date")
     private LocalDate birthDate;
 
+    @Column(name = "death_date")
     private LocalDate deathDate;
 
     @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
     @LastModifiedDate
+    @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
     @Override

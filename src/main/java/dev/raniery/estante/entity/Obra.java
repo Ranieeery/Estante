@@ -32,7 +32,7 @@ public class Obra {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(name = "original_title", nullable = false)
     private String originalTitle;
 
     @Builder.Default
@@ -55,16 +55,18 @@ public class Obra {
     @JoinColumn(name = "publisher_orig_id")
     private Editora publisherOrig;
 
+    @Column(name = "volumes_br")
     private Integer volumesBr;
 
+    @Column(name = "volumes_orig")
     private Integer volumesOrig;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "status_publicacao")
+    @Column(name = "pub_status_br", columnDefinition = "status_publicacao")
     private StatusPublicacao pubStatusBr;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "status_publicacao")
+    @Column(name = "pub_status_orig", columnDefinition = "status_publicacao")
     private StatusPublicacao pubStatusOrig;
 
     @Convert(converter = GeneroObraArrayConverter.class)
@@ -76,8 +78,10 @@ public class Obra {
     @Column(columnDefinition = "demografia")
     private Demografia demographic;
 
+    @Column(name = "start_date_br")
     private LocalDate startDateBr;
 
+    @Column(name = "end_date_br")
     private LocalDate endDateBr;
 
     @OneToMany(mappedBy = "obra", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -92,13 +96,15 @@ public class Obra {
     @Column(columnDefinition = "tipo_obra")
     private TipoObra type;
 
+    @Column(name = "cover_url")
     private String coverUrl;
 
     @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
     @LastModifiedDate
+    @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
     @Override

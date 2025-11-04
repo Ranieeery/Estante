@@ -24,10 +24,6 @@ public class Contribuicao {
     @EmbeddedId
     private ContribuicaoId id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "tipo_contribuicao", nullable = false)
-    private TipoContribuicao tipo;
-
     @MapsId("obraId")
     @ManyToOne
     @JoinColumn(name = "obra_id")
@@ -38,11 +34,16 @@ public class Contribuicao {
     @JoinColumn(name = "autor_id")
     private Autor autor;
 
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "tipo_contribuicao", nullable = false)
+    private TipoContribuicao type;
+
     @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
     @LastModifiedDate
+    @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
     @Override

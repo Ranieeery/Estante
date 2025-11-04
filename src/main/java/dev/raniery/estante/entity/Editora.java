@@ -39,14 +39,15 @@ public class Editora {
     private String site;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "publisher_type", nullable = false)
     private TipoEditora publisherType;
 
     @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
     @LastModifiedDate
+    @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
     @Override
