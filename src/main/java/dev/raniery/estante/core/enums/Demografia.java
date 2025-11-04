@@ -1,7 +1,7 @@
 package dev.raniery.estante.core.enums;
 
 public enum Demografia {
-    SHONEN,
+    SHOUNEN,
     SHOJO,
     SEINEN,
     JOSEI,
