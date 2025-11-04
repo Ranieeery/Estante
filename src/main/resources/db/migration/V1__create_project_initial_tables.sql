@@ -57,7 +57,7 @@ CREATE TABLE tb_obras (
     end_date_br       DATE,
     periodicity       periodicidade,
     type              tipo_obra,
-    cover_url         VARCHAR(255),
+    cover_url         TEXT,
     created_at        TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
     updated_at        TIMESTAMPTZ
 );
@@ -82,6 +82,22 @@ CREATE TABLE tb_contribuicoes (
     created_at TIMESTAMPTZ       NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
     PRIMARY KEY (obra_id, autor_id, tipo)
+);
+
+CREATE TABLE tb_volumes
+(
+    id                BIGSERIAL PRIMARY KEY,
+    obra_id           BIGINT REFERENCES tb_obras (id) ON DELETE CASCADE,
+    volume_number     VARCHAR(5)  NOT NULL,
+    price             NUMERIC(5, 2),
+    release_date_br   DATE,
+    release_date_orig DATE,
+    external_links    TEXT[],
+    cover_url         TEXT,
+    is_purchased      BOOLEAN              DEFAULT FALSE,
+    is_read           BOOLEAN              DEFAULT FALSE,
+    created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at        TIMESTAMPTZ
 );
 
 CREATE OR REPLACE FUNCTION set_updated_at()
@@ -120,5 +136,11 @@ EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER trg_contribuicoes_updated
     BEFORE UPDATE
     ON tb_contribuicoes
+    FOR EACH ROW
+EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER trg_volumes_updated
+    BEFORE UPDATE
+    ON tb_volumes
     FOR EACH ROW
 EXECUTE FUNCTION set_updated_at();
