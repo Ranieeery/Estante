@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ public class Autor {
 
     @Convert(converter = StringArrayConverter.class)
     @Column(columnDefinition = "TEXT[]")
-    private Set<String> aliases;
+    private Set<String> aliases = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     private GeneroAutor gender;
