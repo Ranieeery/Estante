@@ -4,10 +4,10 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-@Converter(autoApply = false)
+@Converter
 public class StringArrayConverter implements AttributeConverter<Set<String>, String> {
 
     @Override
@@ -15,22 +15,32 @@ public class StringArrayConverter implements AttributeConverter<Set<String>, Str
         if (attribute == null || attribute.isEmpty()) {
             return null;
         }
-        return "{" + String.join(",", attribute.stream()
-            .map(s -> "\"" + s.replace("\"", "\\\"") + "\"")
-            .toList()) + "}";
+
+        return "{" + attribute.stream()
+            .map(s -> {
+                String escaped = s.replace("\\", "\\\\")
+                    .replace("\"", "\\\"");
+                return "\"" + escaped + "\"";
+            })
+            .collect(Collectors.joining(",")) + "}";
     }
 
     @Override
     public Set<String> convertToEntityAttribute(String dbData) {
         if (dbData == null || dbData.length() < 2) {
-            return new HashSet<>();
+            return Set.of();
         }
+
         String cleaned = dbData.substring(1, dbData.length() - 1);
         if (cleaned.isBlank()) {
-            return new HashSet<>();
+            return Set.of();
         }
+
         return Arrays.stream(cleaned.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"))
-            .map(s -> s.trim().replace("\"", ""))
-            .collect(HashSet::new, HashSet::add, HashSet::addAll);
+            .map(s -> s.trim()
+                .replaceAll("^\"|\"$", "")
+                .replace("\\\"", "\"")
+                .replace("\\\\", "\\"))
+            .collect(Collectors.toSet());
     }
 }
