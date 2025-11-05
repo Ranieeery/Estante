@@ -1,7 +1,6 @@
 package dev.raniery.estante.entity;
 
 import dev.raniery.estante.entity.config.ContribuicaoId;
-import dev.raniery.estante.entity.enums.TipoContribuicao;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -33,10 +32,6 @@ public class Contribuicao {
     @ManyToOne
     @JoinColumn(name = "autor_id")
     private Autor autor;
-
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "tipo_contribuicao", nullable = false)
-    private TipoContribuicao type;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
