@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class EditoraMapper {
 
-    public static Editora toEntity(EditoraDTO dto) {
+    public Editora toEntity(EditoraDTO dto) {
         Editora editora = new Editora();
         editora.setName(dto.name());
         editora.setAliases(dto.aliases());
@@ -16,7 +16,7 @@ public class EditoraMapper {
         return editora;
     }
 
-    public static EditoraDTO toDto(Editora editora) {
+    public EditoraDTO toDto(Editora editora) {
         return EditoraDTO.builder()
             .name(editora.getName())
             .aliases(editora.getAliases())
