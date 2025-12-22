@@ -34,12 +34,12 @@ public class Editora {
 
     @Convert(converter = StringArrayConverter.class)
     @Column(columnDefinition = "TEXT[]")
-    private Set<String> aliases = new HashSet<>();
+    private String[] aliases;
 
     private String site;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "publisher_type", nullable = false)
+    @Column(name = "publisher_type", nullable = false, columnDefinition = "tipo_editora")
     private TipoEditora publisherType;
 
     @CreatedDate
