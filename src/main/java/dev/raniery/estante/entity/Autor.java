@@ -37,6 +37,7 @@ public class Autor {
     private String[] aliases;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "genero_autor")
     private GeneroAutor gender;
 
     @Column(name = "birth_date")
