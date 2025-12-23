@@ -1,5 +1,6 @@
 package dev.raniery.estante.entity;
 
+import dev.raniery.estante.dtos.EditoraUpdateRequestDTO;
 import dev.raniery.estante.entity.enums.TipoEditora;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -59,5 +60,12 @@ public class Editora {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public void update(EditoraUpdateRequestDTO dto) {
+        if (dto.hasName()) this.name = dto.name();
+        if (dto.hasAliases()) this.aliases = dto.aliases();
+        if (dto.hasSite()) this.site = dto.site();
+        if (dto.hasPublisherType()) this.publisherType = dto.publisherType();
     }
 }
