@@ -1,21 +1,20 @@
 package dev.raniery.estante.entity;
 
-import dev.raniery.estante.entity.config.StringArrayConverter;
 import dev.raniery.estante.entity.enums.GeneroAutor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -33,9 +32,9 @@ public class Autor {
     @Column(nullable = false)
     private String name;
 
-    @Convert(converter = StringArrayConverter.class)
+    @JdbcTypeCode(SqlTypes.ARRAY)
     @Column(columnDefinition = "TEXT[]")
-    private Set<String> aliases = new HashSet<>();
+    private String[] aliases;
 
     @Enumerated(EnumType.STRING)
     private GeneroAutor gender;

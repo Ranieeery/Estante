@@ -16,6 +16,8 @@ spring:
         show_sql: true
         use_sql_comments: true
         ddl-auto: none
+        type:
+          prefer_native_enum_types: true
 
   flyway:
     enabled: true
