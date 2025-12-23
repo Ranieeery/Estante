@@ -1,12 +1,13 @@
 package dev.raniery.estante.entity;
 
-import dev.raniery.estante.entity.config.StringArrayConverter;
 import dev.raniery.estante.entity.enums.TipoEditora;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -30,7 +31,7 @@ public class Editora {
     @Column(nullable = false)
     private String name;
 
-    @Convert(converter = StringArrayConverter.class)
+    @JdbcTypeCode(SqlTypes.ARRAY)
     @Column(columnDefinition = "TEXT[]")
     private String[] aliases;
 

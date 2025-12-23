@@ -1,13 +1,14 @@
 package dev.raniery.estante.mapper;
 
-import dev.raniery.estante.dtos.EditoraDTO;
+import dev.raniery.estante.dtos.EditoraRequestDTO;
+import dev.raniery.estante.dtos.EditoraResponseDTO;
 import dev.raniery.estante.entity.Editora;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class EditoraMapper {
 
-    public Editora toEntity(EditoraDTO dto) {
+    public Editora toEntity(EditoraRequestDTO dto) {
         Editora editora = new Editora();
         editora.setName(dto.name());
         editora.setAliases(dto.aliases());
@@ -16,8 +17,18 @@ public class EditoraMapper {
         return editora;
     }
 
-    public EditoraDTO toDto(Editora editora) {
-        return EditoraDTO.builder()
+    public EditoraRequestDTO toDto(Editora editora) {
+        return EditoraRequestDTO.builder()
+            .name(editora.getName())
+            .aliases(editora.getAliases())
+            .site(editora.getSite())
+            .publisherType(editora.getPublisherType())
+            .build();
+    }
+
+    public EditoraResponseDTO toResponse(Editora editora) {
+        return EditoraResponseDTO.builder()
+            .id(editora.getId())
             .name(editora.getName())
             .aliases(editora.getAliases())
             .site(editora.getSite())

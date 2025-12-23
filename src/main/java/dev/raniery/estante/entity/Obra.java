@@ -1,10 +1,11 @@
 package dev.raniery.estante.entity;
 
 import dev.raniery.estante.entity.config.GeneroObraArrayConverter;
-import dev.raniery.estante.entity.config.StringArrayConverter;
 import dev.raniery.estante.entity.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -35,10 +36,9 @@ public class Obra {
     @Column(name = "original_title", nullable = false)
     private String originalTitle;
 
-    @Builder.Default
-    @Convert(converter = StringArrayConverter.class)
+    @JdbcTypeCode(SqlTypes.ARRAY)
     @Column(columnDefinition = "TEXT[]")
-    private Set<String> aliases = new HashSet<>();
+    private String[] aliases;
 
     @Lob
     private String description;
