@@ -119,4 +119,3 @@ public class Obra {
         return Objects.hashCode(id);
     }
 }
-

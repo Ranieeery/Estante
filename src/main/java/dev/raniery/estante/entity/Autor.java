@@ -1,5 +1,6 @@
 package dev.raniery.estante.entity;
 
+import dev.raniery.estante.dtos.AutorUpdateRequestDTO;
 import dev.raniery.estante.entity.enums.GeneroAutor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,7 @@ public class Autor {
     private String[] aliases;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "genero_autor")
     private GeneroAutor gender;
 
     @Column(name = "birth_date")
@@ -63,5 +65,17 @@ public class Autor {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public void update(AutorUpdateRequestDTO dto) {
+        if (dto.hasBirthDate() && dto.hasDeathDate() && !dto.birthDate().isBefore(dto.deathDate())) {
+            throw new IllegalArgumentException("Birth date must be before death date.");
+        }
+
+        if (dto.hasName()) this.name = dto.name();
+        if (dto.hasAliases()) this.aliases = dto.aliases();
+        if (dto.hasGender()) this.gender = dto.gender();
+        if (dto.hasBirthDate()) this.birthDate = dto.birthDate();
+        if (dto.hasDeathDate()) this.deathDate = dto.deathDate();
     }
 }
