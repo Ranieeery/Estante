@@ -1,6 +1,7 @@
 package dev.raniery.estante.service;
 
 import dev.raniery.estante.dtos.AutorRequestDTO;
+import dev.raniery.estante.dtos.AutorUpdateRequestDTO;
 import dev.raniery.estante.entity.Autor;
 import dev.raniery.estante.mapper.AutorMapper;
 import dev.raniery.estante.repository.AutorRepository;
@@ -19,5 +20,19 @@ public class AutorService {
     @Transactional
     public Autor createAutor(AutorRequestDTO dto) {
         return autorRepository.save(AutorMapper.toEntity(dto));
+    }
+
+    @Transactional(readOnly = true)
+    public Autor findById(Long id) {
+        return autorRepository.findById(id).orElseThrow(() -> new RuntimeException("Autor not found with id: " + id));
+    }
+
+    @Transactional
+    public Autor updateAutor(Long id, AutorUpdateRequestDTO autorDTO) {
+        Autor autor = findById(id);
+
+        autor.update(autorDTO);
+
+        return autor;
     }
 }
