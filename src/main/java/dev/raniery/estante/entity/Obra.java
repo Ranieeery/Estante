@@ -1,6 +1,5 @@
 package dev.raniery.estante.entity;
 
-import dev.raniery.estante.entity.config.GeneroObraArrayConverter;
 import dev.raniery.estante.entity.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
@@ -69,10 +68,10 @@ public class Obra {
     @Column(name = "pub_status_orig", columnDefinition = "status_publicacao")
     private StatusPublicacao pubStatusOrig;
 
-    @Convert(converter = GeneroObraArrayConverter.class)
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.ARRAY)
     @Column(columnDefinition = "genero_obra[]")
-    @Builder.Default
-    private Set<GeneroObra> genres = new HashSet<>();
+    private GeneroObra[] genres;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "demografia")
