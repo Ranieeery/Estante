@@ -41,15 +41,15 @@ public class ObraController {
         return ResponseEntity.ok(ObraMapper.toResponse(obra));
     }
 
-    @GetMapping
-    public ResponseEntity<PagedModel<EntityModel<ObraResponseDTO>>> getObrasByEditoraBrId(@RequestParam(name = "editora") Long editoraId, @PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<ObraResponseDTO> assembler) {
+    @GetMapping(params = "editoraBr")
+    public ResponseEntity<PagedModel<EntityModel<ObraResponseDTO>>> getObrasByEditoraBrId(@RequestParam(name = "editoraBr") Long editoraId, @PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<ObraResponseDTO> assembler) {
         Page<ObraResponseDTO> obraResponseDTOS = obraService.findAllByEditoraBr(editoraId, pageable);
 
         return ResponseEntity.ok(assembler.toModel(obraResponseDTOS));
     }
 
-    @GetMapping
-    public ResponseEntity<PagedModel<EntityModel<ObraResponseDTO>>> getObrasByEditoraOrigId(@RequestParam(name = "editora") Long editoraId, @PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<ObraResponseDTO> assembler) {
+    @GetMapping(params = "editoraOrig")
+    public ResponseEntity<PagedModel<EntityModel<ObraResponseDTO>>> getObrasByEditoraOrigId(@RequestParam(name = "editoraOrig") Long editoraId, @PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<ObraResponseDTO> assembler) {
         Page<ObraResponseDTO> obraResponseDTOS = obraService.findAllByEditoraOrig(editoraId, pageable);
 
         return ResponseEntity.ok(assembler.toModel(obraResponseDTOS));
