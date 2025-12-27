@@ -51,7 +51,7 @@ public class EditoraController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<PagedModel<EntityModel<EditoraResponseDTO>>> search(@RequestParam(name = "name") String name, @PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<EditoraResponseDTO> assembler) {
+    public ResponseEntity<PagedModel<EntityModel<EditoraResponseDTO>>> searchByEditoraName(@RequestParam(name = "name") String name, @PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<EditoraResponseDTO> assembler) {
         Page<EditoraResponseDTO> editoraResponseDTOS = editoraService.findByNameOrAlias(name, pageable);
 
         return ResponseEntity.ok(assembler.toModel(editoraResponseDTOS));

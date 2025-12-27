@@ -11,18 +11,11 @@ public interface EditoraRepository extends JpaRepository<Editora, Long> {
     @Query(value = """
         SELECT *
         FROM tb_editoras e
-        WHERE LOWER(e.name) LIKE LOWER(CONCAT('%', :name, '%'))
-           OR EXISTS (
+        WHERE e.name ILIKE CONCAT('%', :name, '%') ESCAPE '\'
+           OR EXISTS    (
                SELECT 1
-               FROM UNNEST(e.aliases) alias
-               WHERE LOWER(alias) LIKE LOWER(CONCAT('%', :name, '%')))
+               FROM unnest(e.aliases) alias
+               WHERE alias ILIKE CONCAT('%', :name, '%') ESCAPE '\')
         """, nativeQuery = true)
     Page<Editora> findByNameOrAliases(String name, Pageable pageable);
-
-    /*
-    TODO: GIN index para o campo aliases (array)
-    CREATE INDEX idx_editoras_aliases_gin
-    ON tb_editoras
-    USING GIN (aliases);
-     */
 }
