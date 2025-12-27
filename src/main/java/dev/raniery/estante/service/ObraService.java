@@ -49,6 +49,12 @@ public class ObraService {
         return obras.map(ObraMapper::toResponse);
     }
 
+    @Transactional(readOnly = true)
+    public Page<ObraResponseDTO> findAllByEditoraOrig(Long editoraId, Pageable pageable) {
+        Page<Obra> obras = obraRepository.findAllByPublisherOrigId(editoraId, pageable);
+        return obras.map(ObraMapper::toResponse);
+    }
+
     //TODO: Custom exceptions
     private Editora resolvePublisher(EditoraResponseObraDTO publisher, String fieldName) {
 

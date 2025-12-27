@@ -47,4 +47,13 @@ public class ObraController {
 
         return ResponseEntity.ok(assembler.toModel(obraResponseDTOS));
     }
+
+    @GetMapping
+    public ResponseEntity<PagedModel<EntityModel<ObraResponseDTO>>> getObrasByEditoraOrigId(@RequestParam(name = "editora") Long editoraId, @PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<ObraResponseDTO> assembler) {
+        Page<ObraResponseDTO> obraResponseDTOS = obraService.findAllByEditoraOrig(editoraId, pageable);
+
+        return ResponseEntity.ok(assembler.toModel(obraResponseDTOS));
+    }
+
+    //TODO: Get by name/alias??
 }

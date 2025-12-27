@@ -37,7 +37,7 @@ public class EditoraController {
     }
 
     @GetMapping
-    public ResponseEntity<PagedModel<EntityModel<EditoraResponseDTO>>> getEditora(@PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<EditoraResponseDTO> assembler) {
+    public ResponseEntity<PagedModel<EntityModel<EditoraResponseDTO>>> getEditoras(@PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<EditoraResponseDTO> assembler) {
         Page<EditoraResponseDTO> editoraResponseDTOS = editoraService.findAll(pageable);
 
         return ResponseEntity.ok(assembler.toModel(editoraResponseDTOS));
@@ -56,4 +56,8 @@ public class EditoraController {
 
         return ResponseEntity.ok(EditoraMapper.toResponse(updatedEditora));
     }
+
+    //TODO: Get by name/alias??
+    //TODO: Get all Br
+    //TODO: Get all Orig
 }
