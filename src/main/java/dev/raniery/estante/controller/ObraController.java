@@ -6,11 +6,14 @@ import dev.raniery.estante.entity.Obra;
 import dev.raniery.estante.mapper.ObraMapper;
 import dev.raniery.estante.service.ObraService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -29,5 +32,19 @@ public class ObraController {
         Obra obra = obraService.createObra(obraDTO);
 
         return ResponseEntity.created(URI.create("/api/v1/obra/" + obra.getId())).body(ObraMapper.toResponse(obra));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ObraResponseDTO> getObraById(@PathVariable Long id) {
+        Obra obra = obraService.findById(id);
+
+        return ResponseEntity.ok(ObraMapper.toResponse(obra));
+    }
+
+    @GetMapping
+    public ResponseEntity<PagedModel<EntityModel<ObraResponseDTO>>> getObrasByEditoraBrId(@RequestParam(name = "editora") Long editoraId, @PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<ObraResponseDTO> assembler) {
+        Page<ObraResponseDTO> obraResponseDTOS = obraService.findAllByEditoraBr(editoraId, pageable);
+
+        return ResponseEntity.ok(assembler.toModel(obraResponseDTOS));
     }
 }

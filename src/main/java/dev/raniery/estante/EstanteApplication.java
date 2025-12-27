@@ -19,5 +19,4 @@ public class EstanteApplication {
     public static void main(String[] args) {
         SpringApplication.run(EstanteApplication.class, args);
     }
-
 }
