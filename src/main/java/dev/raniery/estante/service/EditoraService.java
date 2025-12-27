@@ -47,4 +47,26 @@ public class EditoraService {
 
         return editora;
     }
+
+    @Transactional(readOnly = true)
+    public Page<EditoraResponseDTO> findByNameOrAlias(String name, Pageable pageable) {
+
+        if (name == null || name.isBlank()) {
+            return Page.empty(pageable);
+        }
+
+        String escapedName = escapeLike(name);
+
+        Page<Editora> editoras = editoraRepository.findByNameOrAliases(escapedName, pageable);
+
+        return editoras.map(EditoraMapper::toResponse);
+    }
+
+    private String escapeLike(String value) {
+        return value
+            .replace("\\", "\\\\")
+            .replace("%", "\\%")
+            .replace("_", "\\_");
+    }
+
 }
