@@ -55,6 +55,20 @@ public class ObraService {
         return obras.map(ObraMapper::toResponse);
     }
 
+    @Transactional(readOnly = true)
+    public Page<ObraResponseDTO> findByTitleOrAlias(String title, Pageable pageable) {
+
+        if (title == null || title.isBlank()) {
+            return Page.empty(pageable);
+        }
+
+        String escapedTitle = escapeLike(title);
+
+        Page<Obra> obras = obraRepository.findByTitleOrAliases(escapedTitle, pageable);
+
+        return obras.map(ObraMapper::toResponse);
+    }
+
     //TODO: Custom exceptions
     private Editora resolvePublisher(EditoraResponseObraDTO publisher, String fieldName) {
 
@@ -63,5 +77,12 @@ public class ObraService {
         }
 
         return editoraRepository.findById(publisher.id()).orElseThrow(() -> new IllegalArgumentException("Editora (%s) not found with id: %d".formatted(fieldName, publisher.id())));
+    }
+
+    private String escapeLike(String value) {
+        return value
+            .replace("\\", "\\\\")
+            .replace("%", "\\%")
+            .replace("_", "\\_");
     }
 }

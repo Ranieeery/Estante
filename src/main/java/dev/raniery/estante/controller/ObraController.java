@@ -55,5 +55,10 @@ public class ObraController {
         return ResponseEntity.ok(assembler.toModel(obraResponseDTOS));
     }
 
-    //TODO: Get by name/alias??
+    @GetMapping("/search")
+    public ResponseEntity<PagedModel<EntityModel<ObraResponseDTO>>> searchByObraName(@RequestParam(name = "title") String title, @PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<ObraResponseDTO> assembler) {
+        Page<ObraResponseDTO> obraResponseDTOS = obraService.findByTitleOrAlias(title, pageable);
+
+        return ResponseEntity.ok(assembler.toModel(obraResponseDTOS));
+    }
 }
