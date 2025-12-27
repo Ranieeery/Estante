@@ -50,6 +50,13 @@ public class EditoraController {
         return ResponseEntity.ok(EditoraMapper.toResponse(editora));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<PagedModel<EntityModel<EditoraResponseDTO>>> search(@RequestParam(name = "name") String name, @PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<EditoraResponseDTO> assembler) {
+        Page<EditoraResponseDTO> editoraResponseDTOS = editoraService.findByNameOrAlias(name, pageable);
+
+        return ResponseEntity.ok(assembler.toModel(editoraResponseDTOS));
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<EditoraResponseDTO> updateEditora(@PathVariable Long id, @RequestBody @Valid EditoraUpdateRequestDTO editoraDTO) {
         Editora updatedEditora = editoraService.updateEditora(id, editoraDTO);
@@ -57,7 +64,6 @@ public class EditoraController {
         return ResponseEntity.ok(EditoraMapper.toResponse(updatedEditora));
     }
 
-    //TODO: Get by name/alias??
     //TODO: Get all Br
     //TODO: Get all Orig
 }
