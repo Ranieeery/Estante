@@ -1,6 +1,5 @@
 package dev.raniery.estante.entity;
 
-import dev.raniery.estante.dtos.EditoraUpdateRequestDTO;
 import dev.raniery.estante.entity.enums.TipoEditora;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +11,7 @@ import org.hibernate.type.SqlTypes;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.util.StringUtils;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;
@@ -62,10 +62,13 @@ public class Editora {
         return Objects.hashCode(id);
     }
 
-    public void update(EditoraUpdateRequestDTO dto) {
-        if (dto.hasName()) this.name = dto.name();
-        if (dto.hasAliases()) this.aliases = dto.aliases();
-        if (dto.hasSite()) this.site = dto.site();
-        if (dto.hasPublisherType()) this.publisherType = dto.publisherType();
+    public void update(String name,
+                       String[] aliases,
+                       String site,
+                       TipoEditora publisherType) {
+        if (StringUtils.hasText(name)) this.name = name;
+        if (aliases != null) this.aliases = aliases;
+        if (StringUtils.hasText(site)) this.site = site;
+        if (publisherType != null) this.publisherType = publisherType;
     }
 }

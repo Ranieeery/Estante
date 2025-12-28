@@ -84,7 +84,19 @@ public class ObraService {
             obra.setPublisherOrig(publisherOrig);
         }
 
-        obra.update(obraDTO.title(), obraDTO.originalTitle(), obraDTO.aliases(), obraDTO.description(), obraDTO.volumesBr(), obraDTO.volumesOrig(), obraDTO.pubStatusBr(), obraDTO.pubStatusOrig(), obraDTO.demographic(), obraDTO.startDateBr(), obraDTO.endDateBr(), obraDTO.periodicity(), obraDTO.type());
+        obra.update(obraDTO.title(),
+            obraDTO.originalTitle(),
+            obraDTO.aliases(),
+            obraDTO.description(),
+            obraDTO.volumesBr(),
+            obraDTO.volumesOrig(),
+            obraDTO.pubStatusBr(),
+            obraDTO.pubStatusOrig(),
+            obraDTO.demographic(),
+            obraDTO.startDateBr(),
+            obraDTO.endDateBr(),
+            obraDTO.periodicity(),
+            obraDTO.type());
 
         return obra;
     }
@@ -100,6 +112,9 @@ public class ObraService {
     }
 
     private String escapeLike(String value) {
-        return value.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_");
+        return value
+            .replace("\\", "\\\\")
+            .replace("%", "\\%")
+            .replace("_", "\\_");
     }
 }

@@ -63,7 +63,10 @@ public class EditoraService {
     public Editora updateEditora(Long id, EditoraUpdateRequestDTO editoraDTO) {
         Editora editora = findById(id);
 
-        editora.update(editoraDTO);
+        editora.update(editoraDTO.name(),
+            editoraDTO.aliases(),
+            editoraDTO.site(),
+            editoraDTO.publisherType());
 
         return editora;
     }
