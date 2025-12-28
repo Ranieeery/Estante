@@ -2,6 +2,7 @@ package dev.raniery.estante.controller;
 
 import dev.raniery.estante.dtos.ObraRequestDTO;
 import dev.raniery.estante.dtos.ObraResponseDTO;
+import dev.raniery.estante.dtos.ObraUpdateRequestDTO;
 import dev.raniery.estante.entity.Obra;
 import dev.raniery.estante.mapper.ObraMapper;
 import dev.raniery.estante.service.ObraService;
@@ -60,5 +61,12 @@ public class ObraController {
         Page<ObraResponseDTO> obraResponseDTOS = obraService.findByTitleOrAlias(title, pageable);
 
         return ResponseEntity.ok(assembler.toModel(obraResponseDTOS));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ObraResponseDTO> updateObra(@PathVariable Long id, @RequestBody @Valid ObraUpdateRequestDTO obraDTO) {
+        Obra updatedObra = obraService.updateObra(id, obraDTO);
+
+        return ResponseEntity.ok(ObraMapper.toResponse(updatedObra));
     }
 }

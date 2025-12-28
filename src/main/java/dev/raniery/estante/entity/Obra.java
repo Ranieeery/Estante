@@ -8,6 +8,7 @@ import org.hibernate.type.SqlTypes;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -116,5 +117,33 @@ public class Obra {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public void update(String title,
+                       String originalTitle,
+                       String[] aliases,
+                       String description,
+                       Integer volumesBr,
+                       Integer volumesOrig,
+                       StatusPublicacao pubStatusBr,
+                       StatusPublicacao pubStatusOrig,
+                       Demografia demographic,
+                       LocalDate startDateBr,
+                       LocalDate endDateBr,
+                       Periodicidade periodicity,
+                       TipoObra type) {
+        if (StringUtils.hasText(title)) this.title = title;
+        if (StringUtils.hasText(originalTitle)) this.originalTitle = originalTitle;
+        if (aliases != null) this.aliases = aliases;
+        if (StringUtils.hasText(description)) this.description = description;
+        if (volumesBr != null) this.volumesBr = volumesBr;
+        if (volumesOrig != null) this.volumesOrig = volumesOrig;
+        if (pubStatusBr != null) this.pubStatusBr = pubStatusBr;
+        if (pubStatusOrig != null) this.pubStatusOrig = pubStatusOrig;
+        if (demographic != null) this.demographic = demographic;
+        if (startDateBr != null) this.startDateBr = startDateBr;
+        if (endDateBr != null) this.endDateBr = endDateBr;
+        if (periodicity != null) this.periodicity = periodicity;
+        if (type != null) this.type = type;
     }
 }

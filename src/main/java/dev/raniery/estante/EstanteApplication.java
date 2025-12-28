@@ -12,6 +12,7 @@ Project: Estante Outrossim
 //@EnableAspectJAutoProxy
 
 //TODO: parametros Optional??
+//TODO: Datas aceitarem MM-AAAA ao inves de DD-MM-AAAA...
 @SpringBootApplication
 @EnableJpaAuditing(dateTimeProviderRef = "offsetDateTimeProvider")
 public class EstanteApplication {
