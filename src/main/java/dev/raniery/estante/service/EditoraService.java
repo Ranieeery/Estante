@@ -4,12 +4,15 @@ import dev.raniery.estante.dtos.EditoraRequestDTO;
 import dev.raniery.estante.dtos.EditoraResponseDTO;
 import dev.raniery.estante.dtos.EditoraUpdateRequestDTO;
 import dev.raniery.estante.entity.Editora;
+import dev.raniery.estante.entity.enums.TipoEditora;
 import dev.raniery.estante.mapper.EditoraMapper;
 import dev.raniery.estante.repository.EditoraRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class EditoraService {
@@ -26,8 +29,11 @@ public class EditoraService {
     }
 
     @Transactional(readOnly = true)
-    public Page<EditoraResponseDTO> findAll(Pageable pageable) {
-        Page<Editora> editoras = editoraRepository.findAll(pageable);
+    public Page<EditoraResponseDTO> findAll(TipoEditora type, Pageable pageable) {
+
+        Page<Editora> editoras = Optional.ofNullable(type)
+            .map(t -> editoraRepository.findAllByType(t, pageable))
+            .orElseGet(() -> editoraRepository.findAll(pageable));
 
         return editoras.map(EditoraMapper::toResponse);
     }
@@ -37,15 +43,6 @@ public class EditoraService {
     @Transactional(readOnly = true)
     public Editora findById(Long id) {
         return editoraRepository.findById(id).orElseThrow(() -> new RuntimeException("Editora not found with id: " + id));
-    }
-
-    @Transactional
-    public Editora updateEditora(Long id, EditoraUpdateRequestDTO editoraDTO) {
-        Editora editora = findById(id);
-
-        editora.update(editoraDTO);
-
-        return editora;
     }
 
     @Transactional(readOnly = true)
@@ -60,6 +57,15 @@ public class EditoraService {
         Page<Editora> editoras = editoraRepository.findByNameOrAliases(escapedName, pageable);
 
         return editoras.map(EditoraMapper::toResponse);
+    }
+
+    @Transactional
+    public Editora updateEditora(Long id, EditoraUpdateRequestDTO editoraDTO) {
+        Editora editora = findById(id);
+
+        editora.update(editoraDTO);
+
+        return editora;
     }
 
     private String escapeLike(String value) {

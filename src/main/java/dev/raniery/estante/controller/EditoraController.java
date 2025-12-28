@@ -4,6 +4,7 @@ import dev.raniery.estante.dtos.EditoraRequestDTO;
 import dev.raniery.estante.dtos.EditoraResponseDTO;
 import dev.raniery.estante.dtos.EditoraUpdateRequestDTO;
 import dev.raniery.estante.entity.Editora;
+import dev.raniery.estante.entity.enums.TipoEditora;
 import dev.raniery.estante.mapper.EditoraMapper;
 import dev.raniery.estante.service.EditoraService;
 import jakarta.validation.Valid;
@@ -37,8 +38,9 @@ public class EditoraController {
     }
 
     @GetMapping
-    public ResponseEntity<PagedModel<EntityModel<EditoraResponseDTO>>> getEditoras(@PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<EditoraResponseDTO> assembler) {
-        Page<EditoraResponseDTO> editoraResponseDTOS = editoraService.findAll(pageable);
+    public ResponseEntity<PagedModel<EntityModel<EditoraResponseDTO>>> getEditoras(@RequestParam(name = "type", required = false) TipoEditora type, @PageableDefault(sort = {"id"}) Pageable pageable, PagedResourcesAssembler<EditoraResponseDTO> assembler) {
+
+        Page<EditoraResponseDTO> editoraResponseDTOS = editoraService.findAll(type, pageable);
 
         return ResponseEntity.ok(assembler.toModel(editoraResponseDTOS));
     }
@@ -63,7 +65,4 @@ public class EditoraController {
 
         return ResponseEntity.ok(EditoraMapper.toResponse(updatedEditora));
     }
-
-    //TODO: Get all Br
-    //TODO: Get all Orig
 }
