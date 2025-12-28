@@ -3,6 +3,7 @@ package dev.raniery.estante.service;
 import dev.raniery.estante.dtos.EditoraResponseObraDTO;
 import dev.raniery.estante.dtos.ObraRequestDTO;
 import dev.raniery.estante.dtos.ObraResponseDTO;
+import dev.raniery.estante.dtos.ObraUpdateRequestDTO;
 import dev.raniery.estante.entity.Editora;
 import dev.raniery.estante.entity.Obra;
 import dev.raniery.estante.mapper.ObraMapper;
@@ -55,6 +56,51 @@ public class ObraService {
         return obras.map(ObraMapper::toResponse);
     }
 
+    @Transactional(readOnly = true)
+    public Page<ObraResponseDTO> findByTitleOrAlias(String title, Pageable pageable) {
+
+        if (title == null || title.isBlank()) {
+            return Page.empty(pageable);
+        }
+
+        String escapedTitle = escapeLike(title);
+
+        Page<Obra> obras = obraRepository.findByTitleOrAliases(escapedTitle, pageable);
+
+        return obras.map(ObraMapper::toResponse);
+    }
+
+    @Transactional
+    public Obra updateObra(Long id, ObraUpdateRequestDTO obraDTO) {
+        Obra obra = findById(id);
+
+        if (obraDTO.hasPublisherBr()) {
+            Editora publisherBr = resolvePublisher(obraDTO.publisherBr(), "Publisher (Brazilian edition)");
+            obra.setPublisherBr(publisherBr);
+        }
+
+        if (obraDTO.hasPublisherOrig()) {
+            Editora publisherOrig = resolvePublisher(obraDTO.publisherOrig(), "Publisher (Origin edition)");
+            obra.setPublisherOrig(publisherOrig);
+        }
+
+        obra.update(obraDTO.title(),
+            obraDTO.originalTitle(),
+            obraDTO.aliases(),
+            obraDTO.description(),
+            obraDTO.volumesBr(),
+            obraDTO.volumesOrig(),
+            obraDTO.pubStatusBr(),
+            obraDTO.pubStatusOrig(),
+            obraDTO.demographic(),
+            obraDTO.startDateBr(),
+            obraDTO.endDateBr(),
+            obraDTO.periodicity(),
+            obraDTO.type());
+
+        return obra;
+    }
+
     //TODO: Custom exceptions
     private Editora resolvePublisher(EditoraResponseObraDTO publisher, String fieldName) {
 
@@ -63,5 +109,12 @@ public class ObraService {
         }
 
         return editoraRepository.findById(publisher.id()).orElseThrow(() -> new IllegalArgumentException("Editora (%s) not found with id: %d".formatted(fieldName, publisher.id())));
+    }
+
+    private String escapeLike(String value) {
+        return value
+            .replace("\\", "\\\\")
+            .replace("%", "\\%")
+            .replace("_", "\\_");
     }
 }

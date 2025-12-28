@@ -1,6 +1,7 @@
 package dev.raniery.estante.repository;
 
 import dev.raniery.estante.entity.Editora;
+import dev.raniery.estante.entity.enums.TipoEditora;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,21 +9,21 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface EditoraRepository extends JpaRepository<Editora, Long> {
 
+    @Query("""
+        SELECT e
+        FROM Editora e
+        WHERE e.publisherType = :type
+        """)
+    Page<Editora> findAllByType(TipoEditora type, Pageable pageable);
+
     @Query(value = """
         SELECT *
         FROM tb_editoras e
-        WHERE LOWER(e.name) LIKE LOWER(CONCAT('%', :name, '%'))
-           OR EXISTS (
+        WHERE e.name ILIKE CONCAT('%', :name, '%') ESCAPE '\'
+           OR EXISTS    (
                SELECT 1
-               FROM UNNEST(e.aliases) alias
-               WHERE LOWER(alias) LIKE LOWER(CONCAT('%', :name, '%')))
+               FROM unnest(e.aliases) alias
+               WHERE alias ILIKE CONCAT('%', :name, '%') ESCAPE '\')
         """, nativeQuery = true)
     Page<Editora> findByNameOrAliases(String name, Pageable pageable);
-
-    /*
-    TODO: GIN index para o campo aliases (array)
-    CREATE INDEX idx_editoras_aliases_gin
-    ON tb_editoras
-    USING GIN (aliases);
-     */
 }
