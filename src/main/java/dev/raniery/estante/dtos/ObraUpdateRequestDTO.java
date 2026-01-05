@@ -6,7 +6,6 @@ import dev.raniery.estante.entity.enums.StatusPublicacao;
 import dev.raniery.estante.entity.enums.TipoObra;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
-import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 
